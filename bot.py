@@ -87,13 +87,12 @@ def get_notes_keyboard():
 def get_links_keyboard():
     keyboard = InlineKeyboardBuilder()
     keyboard.add(InlineKeyboardButton(text="🌐 Сайт колледжа", url="https://example-college.ru"))
-    keyboard.add(InlineKeyboardButton(text="📧 Email", url="mailto:info@college.ru"))
     keyboard.add(InlineKeyboardButton(text="📱 Соцсети", url="https://vk.com/college"))
     keyboard.add(InlineKeyboardButton(text="📚 Библиотека", url="https://library.college.ru"))
     keyboard.add(InlineKeyboardButton(text="💬 Чат студентов", url="https://t.me/college_chat"))
     keyboard.add(InlineKeyboardButton(text="🎮 FunPay", url="https://funpay.com"))
     keyboard.add(InlineKeyboardButton(text="⬅️ Назад", callback_data="main_menu"))
-    keyboard.adjust(2, 2, 1, 1, 1)
+    keyboard.adjust(2, 2, 1, 1)
     return keyboard.as_markup()
 
 
@@ -669,8 +668,20 @@ async def callback_links(callback: CallbackQuery):
         )
         await callback.answer()
     except Exception as e:
-        logger.error(f"Ошибка в callback_links: {e}")
-        await callback.answer("Произошла ошибка", show_alert=True)
+        logger.error(f"Ошибка в callback_links: {e}", exc_info=True)
+        # Попробуем отправить новое сообщение вместо редактирования
+        try:
+            keyboard = get_links_keyboard()
+            await callback.message.answer(
+                "📚 <b>Полезные ссылки</b>\n\n"
+                "Быстрый доступ к важным ресурсам:",
+                reply_markup=keyboard,
+                parse_mode="HTML"
+            )
+            await callback.answer()
+        except Exception as e2:
+            logger.error(f"Ошибка при отправке нового сообщения: {e2}")
+            await callback.answer("Произошла ошибка", show_alert=True)
 
 
 # Обработчик callback для информации о боте
