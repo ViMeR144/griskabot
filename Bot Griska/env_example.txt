@@ -1,0 +1,3 @@
+BOT_TOKEN=8243582284:AAGcbvrQ1B_5Rsudn2HjawQigFJWXNwOIE0
+WEBHOOK_HOST=https://ваш-сервис.onrender.com
+PORT=8000
