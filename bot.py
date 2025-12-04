@@ -659,14 +659,18 @@ async def callback_reminders_delete(callback: CallbackQuery):
 # Обработчик callback для полезных ссылок
 @dp.callback_query(F.data == "links")
 async def callback_links(callback: CallbackQuery):
-    keyboard = get_links_keyboard()
-    await callback.message.edit_text(
-        "📚 <b>Полезные ссылки</b>\n\n"
-        "Быстрый доступ к важным ресурсам:",
-        reply_markup=keyboard,
-        parse_mode="HTML"
-    )
-    await callback.answer()
+    try:
+        keyboard = get_links_keyboard()
+        await callback.message.edit_text(
+            "📚 <b>Полезные ссылки</b>\n\n"
+            "Быстрый доступ к важным ресурсам:",
+            reply_markup=keyboard,
+            parse_mode="HTML"
+        )
+        await callback.answer()
+    except Exception as e:
+        logger.error(f"Ошибка в callback_links: {e}")
+        await callback.answer("Произошла ошибка", show_alert=True)
 
 
 # Обработчик callback для информации о боте
