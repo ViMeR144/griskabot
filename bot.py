@@ -86,7 +86,7 @@ def get_notes_keyboard():
 # Функция создания клавиатуры для полезных ссылок
 def get_links_keyboard():
     keyboard = InlineKeyboardBuilder()
-    keyboard.add(InlineKeyboardButton(text="🌐 Сайт колледжа", url="https://example-college.ru"))
+    keyboard.add(InlineKeyboardButton(text="🌐 Сайт колледжа", url="https://college.cfuv.ru"))
     keyboard.add(InlineKeyboardButton(text="📱 Соцсети", url="https://vk.com/college"))
     keyboard.add(InlineKeyboardButton(text="📚 Библиотека", url="https://library.college.ru"))
     keyboard.add(InlineKeyboardButton(text="💬 Чат студентов", url="https://t.me/college_chat"))
